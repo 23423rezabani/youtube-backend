@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
     min:4,
     max:8
    },
+   verified:{
+      type:Boolean,
+      default:false
+   },
    role:{
       type:String,
       enum:["user","admin"],

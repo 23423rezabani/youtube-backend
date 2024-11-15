@@ -74,3 +74,29 @@ export const findVideoByYoutuber = async (req,res)=>{
  res.status(500).json({message:err.message})
  }
 }
+
+export const findVIdeoDelete =async(req,res)=>{
+ const {id,videoId}  = req.params;
+
+ try{
+
+ const youtuber = await Youtuber.findOne({_id:id});
+
+ if(req.user.id !== youtuber.userId.toString())  return res.status(400).send('you can only delete your own video');
+ 
+ const deleteVideo = await Video.findOneAndDelete(videoId);
+
+ if (deleteVideo) {
+   youtuber.videos.pull(videoId);
+}
+
+ await youtuber.save();
+
+ res.status(200).json(youtuber);
+ 
+}catch(err){
+  console.log(err);
+ res.status(500).json({message:err.message})
+}
+}
+

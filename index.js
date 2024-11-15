@@ -30,3 +30,4 @@ mongoose.connect(process.env.MONGO_URL)
 }).catch((err)=>{
  console.log(err,"not connected")
 })
+// export default app
